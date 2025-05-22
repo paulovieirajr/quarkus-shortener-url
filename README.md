@@ -47,6 +47,14 @@ Este projeto é um encurtador de URL desenvolvido com Quarkus e MongoDB. Ele per
 
 7. Copie o link encurtado gerado e cole no navegador para redirecionar para a URL original.
 
+8. É possível acessar a interface do MongoDB através do Mongo Express:
+   ```bash
+   http://localhost:8081/
+   ```
+    - Usuário: `admin`
+    - Senha: `admin`
+    - Database: `shortener`
+    - Collection: `Shortener`
 
 <details>
     <summary>Instruções padrão geradas automaticamente ao criar o Projeto Quarkus - Clique aqui</summary>
