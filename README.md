@@ -20,7 +20,7 @@ Este projeto é um encurtador de URL desenvolvido com Quarkus e MongoDB. Ele per
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/paulovieirajr/shortener-url.git
+   https://github.com/paulovieirajr/quarkus-shortener-url.git
     ```
 
 2. Navegue até o diretório do projeto:
