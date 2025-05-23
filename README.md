@@ -54,7 +54,7 @@ Este projeto é um encurtador de URL desenvolvido com Quarkus e MongoDB. Ele per
     - Usuário: `admin`
     - Senha: `admin`
     - Database: `shortener`
-    - Collection: `Shortener`
+    - Collection: `ShortenedUrl`
 
 <details>
     <summary>Instruções padrão geradas automaticamente ao criar o Projeto Quarkus - Clique aqui</summary>
