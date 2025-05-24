@@ -9,7 +9,8 @@
 
 ## Descrição
 
-Este projeto é um encurtador de URL desenvolvido com Quarkus e MongoDB. Ele permite que os usuários encurtem URLs longas e as acessem através de um link curto gerado.
+Este projeto é um encurtador de URL desenvolvido com Quarkus e MongoDB. Ele permite que os usuários encurtem URLs longas
+e as acessem através de um link curto gerado.
 
 ## Funcionalidades
 
@@ -27,23 +28,35 @@ Este projeto é um encurtador de URL desenvolvido com Quarkus e MongoDB. Ele per
    ```bash
    cd shortener-url
    ```
-   
-3. Execute o docker-compose para iniciar o MongoDB e o Mongo Express:
+
+3. Execute o script para iniciar a aplicação em modo de desenvolvimento:
+
+    - Caso esteja usando Linux ou MacOS:
    ```bash
-   docker-compose up -d
+    ./build.sh
     ```
-   
-4. Execute o projeto Quarkus:
+    - Caso esteja usando Windows, no PowerShell execute:
     ```bash
-    ./mvnw quarkus:dev
+    .\build.ps1
     ```
-   
-5. Acesse a URL:
+4. Caso queira experimentar o modo nativo, é necessário o Java 21 instalado por causa do mvnw. A GraalVM vai ser baixada
+   automaticamente via Dockerfile.
+
+    - No Linux ou MacOS, execute:
+   ```bash
+    ./build-native.sh
+    ```
+    - No Windows, no PowerShell execute:
+    ```bash
+    .\build-native.ps1
+    ```
+
+5. Após a execução do script, instruções para acessar a aplicação serão exibidas no terminal. A Dev UI e o Swagger UI
+   fica disponível apenas no modo de desenvolvimento.
    ```bash
    http://localhost:8080/q/swagger-ui/
    ```
-   
-6. Use o endpoint `/shortener` para encurtar URLs.
+6. Use o endpoint `/create` para encurtar URLs.
 
 7. Copie o link encurtado gerado e cole no navegador para redirecionar para a URL original.
 
@@ -55,6 +68,7 @@ Este projeto é um encurtador de URL desenvolvido com Quarkus e MongoDB. Ele per
     - Senha: `admin`
     - Database: `shortener`
     - Collection: `ShortenedUrl`
+      <br>
 
 <details>
     <summary>Instruções padrão geradas automaticamente ao criar o Projeto Quarkus - Clique aqui</summary>
