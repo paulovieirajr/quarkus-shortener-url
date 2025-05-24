@@ -53,14 +53,14 @@ e as acessem através de um link curto gerado.
 
 5. Após a execução do script, instruções para acessar a aplicação serão exibidas no terminal. A Dev UI e o Swagger UI
    fica disponível apenas no modo de desenvolvimento.
-   ```bash
-   http://localhost:8080/q/swagger-ui/
-   ```
-6. Use o endpoint `/create` para encurtar URLs.
+   
+   ![image](https://github.com/user-attachments/assets/dff2ca75-9e12-41f9-8ddf-57ab66fdd5ad)
 
-7. Copie o link encurtado gerado e cole no navegador para redirecionar para a URL original.
+7. Use o endpoint `/create` para encurtar URLs.
 
-8. É possível acessar a interface do MongoDB através do Mongo Express:
+8. Copie o link encurtado gerado e cole no navegador para redirecionar para a URL original.
+
+9. É possível acessar a interface do MongoDB através do Mongo Express:
    ```bash
    http://localhost:8081/
    ```
