@@ -35,7 +35,7 @@ public class ShortenerUrlResource {
     UrlValidatorUtils urlValidatorUtils;
 
     @POST
-    @Path("/shortener")
+    @Path("/create")
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.TEXT_PLAIN)
     @Operation(summary = "Shorten a URL")
@@ -78,9 +78,6 @@ public class ShortenerUrlResource {
                             .header("Location", originalUrl)
                             .build();
                 })
-                .orElseGet(() -> {
-                    log.info("Original URL hasn't been found");
-                    return Response.status(Response.Status.NO_CONTENT).build();
-                });
+                .orElseGet(() -> Response.status(Response.Status.NO_CONTENT).build());
     }
 }

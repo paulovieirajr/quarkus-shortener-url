@@ -1,6 +1,5 @@
 package io.github.paulovieirajr.controller;
 
-import io.github.paulovieirajr.service.ShortenerUrlServiceMongo;
 import io.github.paulovieirajr.service.contract.ShortenedUrlService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -29,7 +28,7 @@ class ShortenerUrlResourceTest {
 
         given()
                 .body(VALID_URL)
-                .when().post("/shortener")
+                .when().post("/create")
                 .then()
                 .statusCode(HttpStatus.SC_CREATED);
     }
@@ -39,7 +38,7 @@ class ShortenerUrlResourceTest {
     void shouldResponseBadRequestWhenUrlIsInvalid() {
         given()
                 .body(INVALID_URL)
-                .when().post("/shortener")
+                .when().post("/create")
                 .then()
                 .statusCode(HttpStatus.SC_BAD_REQUEST);
     }
