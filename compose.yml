@@ -1,4 +1,65 @@
 services:
+  app-dev:
+    image: paulovieirajr/shortener-url:latest
+    container_name: shortener-app-dev
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    volumes:
+      - ./src:/workspace/src:cached
+      - ~/.m2:/home/quarkus/.m2:cached
+    depends_on:
+      mongo-db:
+        condition: service_healthy
+    networks:
+      - mongo-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/q/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
+    environment:
+      MONGO_DB_URL: mongodb://admin:admin@mongo-db:27017/shortener?authSource=shortener
+      MONGO_DB_HOST: mongo-db:27017
+      MONGO_DB_DATABASE: shortener
+      MONGO_DB_USER: admin
+      MONGO_DB_PASSWORD: admin
+      MONGO_DB_SOURCE: shortener
+      MONGO_DB_TTL: 600
+      QUARKUS_HTTP_HOST: 0.0.0.0
+      QUARKUS_DEV_UI_CORS: true
+      QUARKUS_DEV_UI_HOSTS: localhost,0.0.0.0
+    working_dir: /workspace
+    command: ["./mvnw", "compile", "quarkus:dev", "-Dquarkus.http.host=0.0.0.0"]
+
+  app:
+    image: paulovieirajr/shortener-url-native:latest
+    container_name: shortener-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      mongo-db:
+        condition: service_healthy
+    networks:
+      - mongo-network
+    environment:
+      MONGO_DB_URL: mongodb://admin:admin@mongo-db:27017/shortener?authSource=shortener
+      MONGO_DB_HOST: mongo-db:27017
+      MONGO_DB_DATABASE: shortener
+      MONGO_DB_USER: admin
+      MONGO_DB_PASSWORD: admin
+      MONGO_DB_SOURCE: shortener
+      MONGO_DB_TTL: 600
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/q/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    profiles:
+      - production
+
   mongo-db:
     image: mongo:7.0
     container_name: mongo-db
@@ -10,13 +71,20 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: shortener
     networks:
       - mongo-network
     command: mongod --auth
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 
-  mongo-ui:
+  mongo-express:
     image: mongo-express:latest
-    container_name: mongo-ui
+    container_name: mongo-express
     restart: always
     ports:
       - "8081:8081"

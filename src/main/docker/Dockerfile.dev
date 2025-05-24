@@ -1,0 +1,27 @@
+FROM registry.access.redhat.com/ubi9/openjdk-21:1.21
+
+ENV LANGUAGE='en_US:en'
+
+USER root
+
+RUN microdnf install -y maven && microdnf clean all
+
+RUN groupadd -r quarkus && useradd -r -g quarkus -u 1001 quarkus || true
+
+WORKDIR /workspace
+
+COPY --chown=quarkus:quarkus . /workspace/
+
+RUN chmod +x /workspace/mvnw
+
+EXPOSE 8080 5005
+
+USER quarkus
+
+ENV JAVA_OPTS_APPEND="-Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+ENV QUARKUS_HTTP_HOST=0.0.0.0
+ENV QUARKUS_DEV_UI_CORS=true
+ENV QUARKUS_DEV_UI_HOSTS=localhost,0.0.0.0
+ENV QUARKUS_LIVE_RELOAD_INSTRUMENTATION=true
+
+CMD ["./mvnw", "compile", "quarkus:dev", "-Dquarkus.http.host=0.0.0.0"]
