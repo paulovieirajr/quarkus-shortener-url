@@ -1,6 +1,7 @@
 package io.github.paulovieirajr.controller;
 
-import io.github.paulovieirajr.service.ShortenerUrlService;
+import io.github.paulovieirajr.service.ShortenerUrlServiceMongo;
+import io.github.paulovieirajr.service.contract.ShortenedUrlService;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import org.apache.http.HttpStatus;
@@ -18,12 +19,12 @@ import static org.hamcrest.Matchers.equalTo;
 class ShortenerUrlResourceTest {
 
     @InjectMock
-    ShortenerUrlService shortenerUrlService;
+    ShortenedUrlService shortenerUrlService;
 
     @Test
     @DisplayName("Should create a shortened url")
-    void shouldCreateShortenerUrl() {
-        Mockito.when(shortenerUrlService.createShortenerUrl(VALID_URL))
+    void shouldcreateShortenedUrl() {
+        Mockito.when(shortenerUrlService.createShortenedUrl(VALID_URL))
                 .thenReturn("http:localhost:8080/" + SEED);
 
         given()
@@ -46,7 +47,7 @@ class ShortenerUrlResourceTest {
     @Test
     @DisplayName("Should response with a redirect for original url")
     void shouldResponseWithOriginalUrlWhenExistsInDatabase() {
-        Mockito.when(shortenerUrlService.fetchShortenerUrl(SEED))
+        Mockito.when(shortenerUrlService.fetchShortenedUrl(SEED))
                 .thenReturn(Optional.of(VALID_URL));
 
         given()

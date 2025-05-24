@@ -1,6 +1,6 @@
 package io.github.paulovieirajr.controller;
 
-import io.github.paulovieirajr.service.ShortenerUrlService;
+import io.github.paulovieirajr.service.contract.ShortenedUrlService;
 import io.github.paulovieirajr.util.UrlValidatorUtils;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -17,6 +17,10 @@ import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 
+/**
+ * ShortenerUrlResource is a RESTful resource that provides endpoints for URL shortening and retrieval.
+ * It allows users to shorten a given URL and retrieve the original URL using a shortened seed.
+ */
 @Tag(name = "ShortenerUrlResource", description = "Generate compact URL and fetch the original")
 @RequestScoped
 @Path("/")
@@ -25,7 +29,7 @@ public class ShortenerUrlResource {
     private static final Logger log = LoggerFactory.getLogger(ShortenerUrlResource.class);
 
     @Inject
-    ShortenerUrlService shortenerUrlService;
+    ShortenedUrlService shortenerUrlService;
 
     @Inject
     UrlValidatorUtils urlValidatorUtils;
@@ -49,7 +53,7 @@ public class ShortenerUrlResource {
 
         String baseUri = uriInfo.getBaseUri().toString();
         log.info("Shortening URL: {} | Base URI: {}", url, baseUri);
-        String shortenerUrl = shortenerUrlService.createShortenerUrl(url);
+        String shortenerUrl = shortenerUrlService.createShortenedUrl(url);
         return Response
                 .created(URI.create(shortenerUrl))
                 .entity(baseUri.concat(shortenerUrl))
@@ -66,7 +70,7 @@ public class ShortenerUrlResource {
     public Response getOriginalUrl(@PathParam("seed") String seed, @Context UriInfo uriInfo) {
         String baseUri = uriInfo.getBaseUri().toString();
         log.info("Recovering URL for seed: {} | Base URI: {}", seed, baseUri);
-        return shortenerUrlService.fetchShortenerUrl(seed)
+        return shortenerUrlService.fetchShortenedUrl(seed)
                 .map(originalUrl -> {
                     log.info("Original URL has been found: {}", originalUrl);
                     return Response

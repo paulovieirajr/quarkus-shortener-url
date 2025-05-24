@@ -17,13 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-class ShortenerUrlServiceTest {
+class ShortenerUrlServiceMongoTest {
 
     @InjectMock
     MongoDBTemplate mongoDBTemplate;
 
     @InjectSpy
-    ShortenerUrlService shortenerUrlService;
+    ShortenerUrlServiceMongo shortenerUrlService;
 
     @Test
     @DisplayName("Should create a shortened url")
@@ -32,7 +32,7 @@ class ShortenerUrlServiceTest {
         Mockito.when(mongoDBTemplate.insert(Mockito.anyCollection()))
                 .thenReturn(List.of(new ShortenedUrl(SEED, VALID_URL, TTL)));
 
-        String result = shortenerUrlService.createShortenerUrl(VALID_URL);
+        String result = shortenerUrlService.createShortenedUrl(VALID_URL);
         assertEquals(SEED, result);
     }
 
@@ -42,7 +42,7 @@ class ShortenerUrlServiceTest {
         Mockito.when(mongoDBTemplate.find(ShortenedUrl.class, SEED))
                 .thenReturn(Optional.of(new ShortenedUrl(SEED, VALID_URL, TTL)));
 
-        Optional<String> result = shortenerUrlService.fetchShortenerUrl(SEED);
+        Optional<String> result = shortenerUrlService.fetchShortenedUrl(SEED);
 
         assertTrue(result.isPresent());
         assertEquals(VALID_URL, result.get());
