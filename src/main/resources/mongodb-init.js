@@ -1,8 +1,8 @@
 db = db.getSiblingDB('shortener');
 
 db.createUser({
-    user: "java",
-    pwd: "mongodb",
+    user: "admin",
+    pwd: "admin",
     roles: [
         {
             role: "readWrite",
@@ -18,5 +18,20 @@ db.ShortenedUrl.createIndex(
     {
         "expireAfterSeconds": 0,
         "name": "ttl_index"
+    }
+);
+
+db.ShortenedUrl.createIndex(
+    { "shortCode": 1 },
+    {
+        "unique": true,
+        "name": "shortcode_unique_index"
+    }
+);
+
+db.ShortenedUrl.createIndex(
+    { "originalUrl": 1 },
+    {
+        "name": "original_url_index"
     }
 );
