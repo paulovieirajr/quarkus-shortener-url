@@ -70,7 +70,7 @@ public class ShortenerUrlResource {
     public Response getOriginalUrl(@PathParam("seed") String seed, @Context UriInfo uriInfo) {
         String baseUri = uriInfo.getBaseUri().toString();
         log.info("Recovering URL for seed: {} | Base URI: {}", seed, baseUri);
-        return shortenerUrlService.fetchShortenedUrl(seed)
+        return shortenerUrlService.findShortenedUrlBySeed(seed)
                 .map(originalUrl -> {
                     log.info("Original URL has been found: {}", originalUrl);
                     return Response

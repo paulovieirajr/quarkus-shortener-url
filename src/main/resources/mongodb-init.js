@@ -20,18 +20,3 @@ db.ShortenedUrl.createIndex(
         "name": "ttl_index"
     }
 );
-
-db.ShortenedUrl.createIndex(
-    { "shortCode": 1 },
-    {
-        "unique": true,
-        "name": "shortcode_unique_index"
-    }
-);
-
-db.ShortenedUrl.createIndex(
-    { "originalUrl": 1 },
-    {
-        "name": "original_url_index"
-    }
-);

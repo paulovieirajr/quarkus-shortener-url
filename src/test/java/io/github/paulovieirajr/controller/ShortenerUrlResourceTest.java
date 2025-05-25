@@ -46,7 +46,7 @@ class ShortenerUrlResourceTest {
     @Test
     @DisplayName("Should response with a redirect for original url")
     void shouldResponseWithOriginalUrlWhenExistsInDatabase() {
-        Mockito.when(shortenerUrlService.fetchShortenedUrl(SEED))
+        Mockito.when(shortenerUrlService.findShortenedUrlBySeed(SEED))
                 .thenReturn(Optional.of(VALID_URL));
 
         given()

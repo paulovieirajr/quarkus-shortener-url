@@ -42,7 +42,7 @@ class ShortenerUrlServiceMongoTest {
         Mockito.when(mongoDBTemplate.find(ShortenedUrl.class, SEED))
                 .thenReturn(Optional.of(new ShortenedUrl(SEED, VALID_URL, TTL)));
 
-        Optional<String> result = shortenerUrlService.fetchShortenedUrl(SEED);
+        Optional<String> result = shortenerUrlService.findShortenedUrlBySeed(SEED);
 
         assertTrue(result.isPresent());
         assertEquals(VALID_URL, result.get());
